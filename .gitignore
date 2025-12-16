@@ -1,0 +1,23 @@
+# Environments
+.venv/
+env/
+
+# Python
+__pycache__/
+*.pyc
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Data artifacts
+*/data/interim/
+*/data/processed/
+
+# Models & artifacts
+*/artifacts/
+*.pkl
+*.joblib
+
+# OS
+.DS_Store
+Thumbs.db
