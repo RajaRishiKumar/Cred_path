@@ -1,32 +1,82 @@
-# CreditPathAI
+#  CreditPathAI — Credit Default Risk Prediction
 
-## CreditPathAI—Automating and optimizing the loan recovery lifecycle by modeling repayment behavior using diverse data
+## 📌 Table of Contents
 
-CreditPathAI is an end-to-end machine learning system for **credit default risk prediction**, built with a **clean, production-oriented architecture**. It demonstrates how real-world ML systems are designed, structured, evaluated, and deployed — not just how models are trained.
-
-The project focuses on **reusability, inference safety, dataset isolation, and deployment readiness**, mirroring industry ML engineering practices.
+- [1. Overview](#1-overview)
+- [2. What This Project Does](#2-what-this-project-does)
+- [3. Business Impact](#3-business-impact)
+- [4. Supported Datasets](#4-supported-datasets)
+- [5. System Architecture](#5-system-architecture)
+- [6. Machine Learning Pipeline](#6-machine-learning-pipeline)
+- [7. Quick Start (Run Locally)](#7-quick-start-run-locally)
+- [8. Contribution Guidelines](#8-contribution-guidelines)
+- [9. Known Limitations & Expected Behavior](#9-known-limitations--expected-behavior)
+- [10. Project Structure](#10-project-structure)
+- [11. Results Summary](#11-results-summary)
+- [12. Tech Stack](#12-tech-stack)
+- [13. Author](#13-author)
+- [14. License](#14-license)
 
 ---
 
-## Overview
 
-Financial institutions must identify high-risk borrowers **before default occurs** to reduce losses and improve lending decisions.
 
-CreditPathAI addresses this problem by building predictive models that estimate the probability of loan repayment failure using structured financial and borrower data. The system supports **multiple datasets** through a shared ML engine, allowing consistent experimentation, evaluation, and deployment across different data sources.
+
+**CreditPathAI** is an end-to-end machine learning system for **credit default risk prediction**.  
+It models borrower repayment behavior using structured financial data and follows **production-style ML engineering practices**.
+
+> **Core idea:** keep dataset-specific ingestion separate from a **shared, reusable ML engine** so training, evaluation, and inference remain consistent and safe.
+
+---
+
+## 1. Overview
+
+CreditPathAI helps financial institutions **identify high-risk borrowers early** by estimating the probability of loan default.  
+The system is modular, reproducible, and deployment-ready, with a Streamlit app for interactive predictions.
+
+---
+
+## 2. What This Project Does
+
+- Predicts **loan default probability**
+- Enforces **inference safety** (feature order locking + serialized preprocessing)
+- Supports **multiple datasets** with a shared ML pipeline
+- Provides an **interactive Streamlit application**
+
+
+## 3. Business Impact
+
+- Enables early identification of high-risk borrowers  
+- Supports proactive intervention instead of reactive recovery  
+- Improves underwriting efficiency and risk-based decision making  
+
 
 
 ---
 
-## System Architecture
+## 4. Supported Datasets
 
-The system follows a modular pipeline design:
+### Kaggle Loan Default Dataset
+- **Source:** Kaggle  
+- **Target:** `repay_fail` (0 = No Default, 1 = Default)  
+- **Type:** Tabular borrower & financial features  
 
-* Dataset-specific ingestion and artifact storage
-* Shared preprocessing, modeling, evaluation, and inference logic
-* Strict separation between training and inference stages
+### Microsoft Loan Dataset
+- **Source:** Microsoft sample loan data  
+- **Target:** Default indicator  
+- **Type:** Relational borrower & loan tables  
 
+Each dataset is processed independently while reusing the same ML pipeline to prevent data leakage.
 
-## Pipeline Flow
+---
+
+## 5. System Architecture
+
+- Dataset-specific ingestion & artifact storage  
+- Shared preprocessing, modeling, evaluation, and inference logic  
+- Strict separation between **training** and **inference**  
+
+### 6. Machine Learning Pipeline Flow 
 
 ```text
 Raw Data
@@ -42,144 +92,91 @@ Evaluation
 Saved Artifacts
    ↓
 Inference / Streamlit App
-
-
-
----
-
-## Supported Datasets
-
-### Kaggle Loan Default Dataset
-
-* **Source:** Kaggle
-* **Target Variable:** `repay_fail` (0 = No Default, 1 = Default)
-* **Data Type:** Tabular borrower and financial features
-
-### Microsoft Loan Dataset
-
-* **Source:** Microsoft sample loan data
-* **Target Variable:** Default indicator
-* **Data Type:** Relational borrower and loan tables
-
-Each dataset is processed independently while reusing the same core ML pipeline to ensure consistency and prevent data leakage.
+```
 
 ---
 
 ## Machine Learning Pipeline
 
 ### Ingestion
-
-* Load raw CSV / TXT files
-* Merge relational tables when required
-* Validate schema consistency
+- Load CSV / TXT files  
+- Merge relational tables when required  
+- Validate schema consistency  
 
 ### Preprocessing
+- Missing value handling  
+- Categorical encoding  
+- Feature scaling  
+- Feature order locking for inference  
 
-* Missing value handling
-* Categorical encoding
-* Feature scaling
-* Feature order locking for inference safety
-
-### Modeling
-
-Supported models include:
-
-* Logistic Regression
-* Random Forest
-* Gradient Boosting
-* XGBoost
-* K-Nearest Neighbors (KNN)
-* Naive Bayes
-* Support Vector Machine (SVM)
+### Models Supported
+- Logistic Regression  
+- Random Forest  
+- Gradient Boosting  
+- XGBoost  
+- K-Nearest Neighbors (KNN)  
+- Naive Bayes  
+- Support Vector Machine (SVM)  
 
 ### Evaluation
-
-* Accuracy, Precision, Recall, F1-score
-* ROC-AUC and PR-AUC
-* Confusion Matrix
-* Feature importance for tree-based models
-* Multi-model performance comparison
+- Accuracy, Precision, Recall, F1-score  
+- ROC-AUC, PR-AUC  
+- Confusion Matrix  
+- Feature importance (tree-based models)  
 
 ### Inference
-
-* Predictions using saved preprocessing artifacts
-* Strict feature alignment enforcement
-* Serialized, production-ready models
-
-### Deployment
-
-* Interactive Streamlit application for prediction and visualization
+- Uses saved preprocessing artifacts  
+- Enforces strict feature alignment  
+- Production-ready serialized models  
 
 ---
 
-## Installation (Users)
+## 7. Quick Start (Run Locally)
 
-These instructions are for users who want to **run the pipeline or test the application locally**.
-
+### Install Dependencies
 ```bash
 pip install -r requirements.txt
 ```
 
-Run the ML pipeline:
-
+### Run the ML Pipeline
 ```bash
 python main.py
 ```
 
-Launch the Streamlit application:
-
+### Launch Streamlit App
 ```bash
 streamlit run streamlit/streamlit_app.py
 ```
 
 ---
 
-## Installation 
+## 8. Contribution Guidelines
 
-To contribute to the project:
-
-1. Fork the repository
-2. Clone your fork locally
-3. Create a virtual environment
-4. Install dependencies using `requirements.txt`
-5. Make changes inside the `src/` directory
-6. Test the pipeline using `main.py`
-
-All core logic lives in Python modules — notebooks are used only for experimentation and analysis.
+- Keep ML logic modular and dataset-agnostic  
+- Do not hardcode file paths inside core logic  
+- Ensure feature order consistency for inference  
+- Add clear docstrings for new modules  
+- Test changes before submitting a pull request  
 
 ---
 
-## Contribution Guidelines
+## 9. Known Limitations
 
-* Keep ML logic modular and dataset-agnostic
-* Do not hardcode file paths inside core logic
-* Ensure feature order consistency for inference
-* Add clear docstrings for new modules
-* Test changes before submitting a pull request
+- Hyperparameter tuning is minimal  
+- Feature engineering is dataset-specific  
+- Streamlit app is for demonstration, not large-scale deployment  
 
----
-
-## Known Limitations
-
-* Hyperparameter tuning is minimal and can be extended
-* Feature engineering is dataset-specific and may not generalize
-* Streamlit app is designed for demonstration, not large-scale deployment
-
-## Expected Behaviors
-
-- Metrics may vary across runs due to randomized train-test splits
-- SMOTE is applied only during training, never inference
-- Streamlit app assumes pre-generated artifacts
-
-
-
+###  Expected Behaviors
+- Metrics may vary due to randomized splits  
+- SMOTE is applied **only during training**  
+- Streamlit app assumes pre-generated artifacts  
 
 ---
 
-## Project Structure
+## 10. Project Structure
 
 ```text
-CreditPathAI_Oct_Batch/
+CreditPathAI/
 │
 ├── src/                    # Reusable ML engine
 │   ├── ingestion.py
@@ -211,32 +208,36 @@ CreditPathAI_Oct_Batch/
 
 ---
 
-## Results Summary
+## 11. Results Summary
 
-* Tree-based models outperform linear models on nonlinear credit patterns
-* Class imbalance handled using SMOTE where appropriate
-* ROC-AUC used as the primary metric due to skewed class distribution
-* Feature importance analysis highlights key financial risk drivers
+- Tree-based models outperform linear models  
+- Class imbalance handled using SMOTE (training only)  
+- ROC-AUC used as the primary metric  
 
-Detailed results are available in dataset-specific README files.
+Detailed model comparison metrics are available in dataset-specific reports.
 
----
-
-## Tech Stack
-
-* Python
-* Pandas, NumPy
-* scikit-learn
-* imbalanced-learn
-* XGBoost
-* Matplotlib, Seaborn
-* Joblib
-* Streamlit
 
 ---
 
-## Author 
+## 12. Tech Stack
 
-This project was developed with an emphasis on **clean architecture**, **reproducibility**, and **industry-aligned machine learning engineering practices**.
+- Python  
+- Pandas, NumPy  
+- scikit-learn, imbalanced-learn  
+- ML models 
+- Matplotlib, Seaborn  
+- Joblib  
+- Streamlit  
 
-                                        - RAJA RISHI KUMAR V
+---
+
+## 13 Author
+
+Name : **RAJA RISHI KUMAR V**
+Contact : For questions or suggestions, please open an issue on **GitHub**.
+
+---
+
+## 14. License
+
+See the `LICENSE` file.
