@@ -7,10 +7,10 @@
 - [3. Business Impact](#3-business-impact)
 - [4. Supported Datasets](#4-supported-datasets)
 - [5. System Architecture](#5-system-architecture)
-- [6. Machine Learning Pipeline](#6-machine-learning-pipeline)
+- [6. Machine Learning Pipeline](#6-machine-learning-pipeline-flow)
 - [7. Quick Start (Run Locally)](#7-quick-start-run-locally)
 - [8. Contribution Guidelines](#8-contribution-guidelines)
-- [9. Known Limitations & Expected Behavior](#9-known-limitations--expected-behavior)
+- [9. Known Limitations & Expected Behavior](#9-known-limitations)
 - [10. Project Structure](#10-project-structure)
 - [11. Results Summary](#11-results-summary)
 - [12. Tech Stack](#12-tech-stack)
@@ -160,13 +160,15 @@ streamlit run streamlit/streamlit_app.py
 
 ---
 
-## 9. Known Limitations
+## 9. Known Limitations & Expected Behaviors
+
+### Known Limitations
 
 - Hyperparameter tuning is minimal  
 - Feature engineering is dataset-specific  
 - Streamlit app is for demonstration, not large-scale deployment  
 
-###  Expected Behaviors
+### Expected Behaviors
 - Metrics may vary due to randomized splits  
 - SMOTE is applied **only during training**  
 - Streamlit app assumes pre-generated artifacts  
