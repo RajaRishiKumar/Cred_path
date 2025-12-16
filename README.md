@@ -1,6 +1,6 @@
 #  CreditPathAI — Credit Default Risk Prediction
 
-## 📌 Table of Contents
+## Table of Contents
 
 - [1. Overview](#1-overview)
 - [2. What This Project Does](#2-what-this-project-does)
